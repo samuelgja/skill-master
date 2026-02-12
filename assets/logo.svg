@@ -1,0 +1,13 @@
+<svg width="640" height="160" viewBox="0 0 640 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+  <rect x="10" y="10" width="620" height="140" rx="20" fill="#0B1220"/>
+  <rect x="22" y="22" width="116" height="116" rx="16" fill="url(#g1)"/>
+  <path d="M56 55h48v12H56zM56 76h48v12H56zM56 97h30v12H56z" fill="#0B1220"/>
+  <text x="160" y="86" fill="#E5E7EB" font-family="Verdana, Geneva, sans-serif" font-size="44" font-weight="700">skill-master</text>
+  <text x="162" y="114" fill="#94A3B8" font-family="Verdana, Geneva, sans-serif" font-size="18">Practical skills for coding agents</text>
+</svg>
