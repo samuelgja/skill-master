@@ -7,6 +7,10 @@ description: Use when creating or refining implementation tasks for engineering 
 
 Create PM-style execution tasks that are brief, strict, and parallel-friendly.
 
+## Quick Path
+
+Run `use-memory` first to load constraints/preferences, then continue with task creation.
+
 ## Goal
 
 Produce a short plan that tells:

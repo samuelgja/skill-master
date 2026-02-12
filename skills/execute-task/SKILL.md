@@ -7,6 +7,10 @@ description: Use to execute an approved task plan from docs/tasks. Trigger when 
 
 Execute tasks fast without drifting from scope.
 
+## Quick Path
+
+Run `use-memory` first to load constraints/preferences, then continue with execution.
+
 ## Goal
 
 Turn a plan into completed work with minimal mistakes, minimal repetition, and clear evidence.

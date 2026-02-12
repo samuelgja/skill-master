@@ -35,8 +35,6 @@ ls -la ~/.claude/skills
 
 Each installed skill should appear as a directory/symlink containing `SKILL.md`.
 
-Start a new Claude Code session and ask for a skill-triggering task (example: "help me plan this feature" or "let's debug this issue"). The matching skill should trigger automatically.
-
 ## Notes
 
 - Claude discovers skills from `~/.claude/skills` (personal) and `.claude/skills` (project).

@@ -7,6 +7,10 @@ description: Use for ideation and spec-definition work before implementation. Tr
 
 Run a short, strict facilitation flow that separates idea exploration from design specification.
 
+## Preflight
+
+Run `use-memory` first, then carry only relevant constraints/preferences into this workflow.
+
 ## Modes
 
 - Ideation mode: Explore and narrow options without forcing a full design.
@@ -20,12 +24,14 @@ Run a short, strict facilitation flow that separates idea exploration from desig
 4. Keep answers concrete, concise, and testable.
 5. Do divergence before convergence.
 6. Do not force design output unless requested.
+7. Keep outputs short and decision-focused.
 
 ## Workflow
 
 1. Ground context:
 - Summarize relevant current state.
 - Confirm goal, constraints, and success criteria.
+- Include only the memory constraints/preferences that affect the current decision.
 
 2. Diverge:
 - Propose 2-4 distinct approaches.

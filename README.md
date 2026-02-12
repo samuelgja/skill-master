@@ -61,33 +61,33 @@ Fetch and follow update instructions from https://raw.githubusercontent.com/samu
 Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/opencode.md
 ```
 
-After install, start a new session and ask:
-- "help me plan this feature"
-- "execute this plan"
-- "let's debug this failing test"
-
-The matching skill should auto-trigger.
+After install or update, start a new session and begin your task.
 
 ## Included Skills
 
 | Skill | Purpose |
 |---|---|
+| `use-memory` | Quickly load relevant memory constraints/preferences before other workflows |
 | `brainstorm` | Explore ideas, converge decisions, optional design handoff |
+| `memory` | Capture and reuse user decisions/preferences with local-by-default memory |
 | `task` | Create short PM-style phased tasks with blocking/non-blocking tasks |
 | `execute-task` | Execute approved tasks in single-agent or parallel mode |
 | `fix` | Test-first bug fixing with clear evidence and strict stop rules |
 
 ## Recommended Workflow
 
-1. `brainstorm` -> shape direction
-2. `task` -> create execution plan in `docs/tasks/`
-3. `execute-task` -> implement and verify
-4. `fix` -> handle regressions with test-first flow
-5. Completed tasks move to `docs/done-tasks/`
+1. `use-memory` -> quickly load relevant memory before other workflows
+2. `brainstorm` -> shape direction
+3. `memory` -> store durable preferences/constraints
+4. `task` -> create execution plan in `docs/tasks/`
+5. `execute-task` -> implement and verify
+6. `fix` -> handle regressions with test-first flow
+7. Completed tasks move to `docs/done-tasks/`
 
 ## Repository Structure
 
 - `skills/` - skill folders (`<name>/SKILL.md`)
 - `installation/` - install guides by platform
+- `docs/memory/` - local project memory log (`memories.ndjson`)
 - `docs/tasks/` - active tasks
 - `docs/done-tasks/` - completed tasks

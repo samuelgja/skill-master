@@ -32,8 +32,6 @@ ls -la ~/.agents/skills/skill-master
 
 You should see a symlink pointing to `~/.codex/skill-master/skills`.
 
-Start a new Codex session and ask for a skill-triggering task (example: "help me plan this feature" or "let's debug this issue"). The matching skill should trigger automatically.
-
 ## Compatibility Note (older setups)
 
 If your Codex environment is configured for legacy user path discovery, use:

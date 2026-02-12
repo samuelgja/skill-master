@@ -7,6 +7,10 @@ description: Use when fixing bugs or regressions with a strict test-first defaul
 
 Ship a verified bug fix fast, with test evidence.
 
+## Quick Path
+
+Run `use-memory` first to load constraints/preferences, then continue with bug fixing.
+
 ## Hard Rules
 
 1. Do not patch from a vague symptom.
