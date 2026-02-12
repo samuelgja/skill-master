@@ -5,66 +5,64 @@ description: Use when creating or refining implementation tasks for engineering 
 
 # Task
 
-Create PM-style execution tasks that are brief, strict, and parallel-friendly.
+Create brief, strict, parallel-ready execution tasks.
 
 ## Quick Path
 
-Run `use-memory` first to load constraints/preferences, then continue with task creation.
+Run `use-memory`, then create tasks.
 
 ## Goal
 
-Produce a short plan that tells:
-- What we will do
+Produce a plan that states:
+- What will be done
 - Why it matters
-- Where in the system it likely applies (component/area, not file-by-file)
-- What benefit we expect
+- Scope boundaries
+- How success is verified
 
-## Hard Rules
+## Non-Negotiables
 
 1. Keep tasks concise. No implementation-level code instructions.
-2. Always ask clarification before drafting v1 unless the user explicitly says to skip questions.
-3. Ask exactly 1 high-impact clarification question first; ask a 2nd only if the first answer leaves a blocking ambiguity.
-4. If assumptions are required, list them and ask for quick confirmation before writing the final plan.
-5. Prefer phases that can be executed in parallel when safe.
-6. Mark dependencies explicitly as blocking or non-blocking.
-7. Every task must be testable and self-explanatory.
-8. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
-9. Start every plan with a one-sentence brief: what this plan delivers.
-10. Add stack/process guidance in max 2 sentences (language/framework/tools and workflow rules from prompt or loaded skills).
-11. If prompt/skills define process constraints (example: not using git), mention and enforce them in the header.
-12. Do not start execution-oriented wording ("implement", "run now", "apply immediately") before clarification is complete.
-13. If user does not answer clarification, stop after posting the single question and wait.
+2. Ask exactly 1 decision-shaping clarification question before drafting, unless user says to skip questions.
+3. Clarification must be a short pick-list with 2-4 options plus `Other`.
+4. For best UX, present clarification options in checkbox style.
+5. Ask the user to answer using `1`, `2`, `3`, or their own one-line option.
+6. If assumptions are required, list them and ask for quick confirmation before writing the final plan.
+7. Prefer phases that can be executed in parallel when safe.
+8. Mark dependencies explicitly as blocking or non-blocking.
+9. Every task must be testable and self-explanatory.
+10. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
+11. Start with a one-sentence brief of plan outcome.
+12. Add stack/process guidance in max 2 sentences.
+13. If process constraints are known from prompt/skills, state them in the header and enforce them.
+14. If user does not answer clarification, stop after the question and wait.
+15. If the user asks for "best" definitions or interaction patterns, run focused online research first and cite 3-6 authoritative sources.
 
-## Planning Process
+## Workflow
 
 1. Context lock:
-- Restate objective, constraints, and deadline/risk level.
-- Note relevant project rules/skills to respect in one short header line.
-- Extract stack/process constraints from prompt and loaded skills before drafting phases.
+- Restate objective, constraints, and risk/priority.
+- Extract project rules and process limits.
 
-2. Clarification gate (mandatory):
-- Ask 1 question that changes scope, sequencing, or acceptance criteria.
-- Prefer missing info in this order: success criteria -> constraints -> non-goals -> deadline/priority.
-- Do not draft phases yet.
-- If user says "skip questions", proceed with explicit assumptions.
-- If user does not respond, wait instead of auto-planning.
+2. Research-first gate (conditional):
+- Trigger only when user requests "best practices", "research", or quality benchmarking.
+- Use authoritative sources (standards, major labs, established UX/PM references).
+- Summarize findings into 3-6 short rules that shape the plan.
 
-3. Optional second clarification:
-- Ask 1 additional question only if still blocked by a major ambiguity.
-- Otherwise proceed to draft.
+3. Clarification gate (mandatory):
+- Ask 1 high-impact question in pick-list format.
+- Prefer missing info order: success criteria -> constraints -> non-goals -> deadline.
+- Ask user to reply with `1`, `2`, `3`, or their own one-line answer.
+- If answer is still blocking, ask 1 follow-up question; otherwise draft.
 
 4. Draft phased plan:
-- Group work by outcome, not by files.
-- Use short task lines with checkboxes.
-- Add dependency tag per task: `[B]` blocking, `[NB]` non-blocking.
-- Add owner lane hint when parallelization is possible (Agent A/B/C).
+- Group by outcomes, not files.
+- Use checkboxes and tags: `[B]` blocking, `[NB]` non-blocking.
+- Add owner hint where parallel work is possible (`Agent A/B/C`).
 
 5. Quality pass:
-- Remove vague tasks.
-- Remove duplicate tasks.
-- Ensure each phase has a clear done condition.
-- Run a DoR-lite check on each blocking task: clear outcome, owner, dependency, measurable done condition.
-- Add one "Validation" task or section that verifies behavior with concrete checks.
+- Remove vague/duplicate tasks.
+- Ensure each phase has a measurable done condition.
+- Add a validation section with concrete checks.
 
 ## Output Format (Strict)
 
@@ -80,6 +78,7 @@ Use this exact structure:
 - Constraints:
 - Stack and process guidance:
 - Must-respect project rules/skills:
+- Research basis: <only if research-first gate triggered>
 
 ## Scope
 - In:
@@ -89,8 +88,10 @@ Use this exact structure:
 - <assumption>
 
 ## Clarifications
-- Q1:
-- A1:
+- Question:
+- Pick one (checkbox style, also some description):
+- Reply format: `1 | 2 | 3 | your own: <one line>`
+- Answer:
 - Status: `answered | user_skipped_questions`
 
 ## Phases
@@ -115,7 +116,7 @@ Use this exact structure:
 - [ ] <observable outcome>
 ```
 
-## Task Writing Standard
+## Task Quality Standard
 
 A good task line must:
 - Start with a verb.
@@ -130,20 +131,12 @@ Use an INVEST-lite check before finalizing:
 - Small
 - Testable
 
-Also validate each task against 2026 agent-planning quality signals:
-- Specific: objective and boundaries are explicit.
-- Observable: acceptance can be verified without guessing intent.
-- Sequenced: dependency type is explicit.
-- Recoverable: high-risk work includes rollback/mitigation note.
-- Cost-aware: avoid over-decomposition for trivial scope.
-
-Reject tasks like:
-- "Refactor code"
-- "Fix stuff"
-- "Update files"
-
-Prefer:
-- "Define input validation boundaries for order intake (Owner: Agent A) - Why: prevent invalid writes - Benefit: fewer runtime failures"
+Also validate with SCORE-lite:
+- Specific: boundaries are explicit.
+- Checkable: acceptance is observable.
+- Ordered: dependency type is explicit.
+- Recoverable: risky work has mitigation.
+- Efficient: no over-decomposition.
 
 ## Parallel Work Rules
 
@@ -163,4 +156,4 @@ Prefer:
 
 ## Handoff
 
-After the task plan is created and confirmed, execution can start immediately with the `execute-task` skill using the saved plan in `docs/tasks/...`.
+After the task plan is created and confirmed, execution can start with `execute-task` (or `execute-plan` if your environment uses that alias) using the saved plan in `docs/tasks/...`.

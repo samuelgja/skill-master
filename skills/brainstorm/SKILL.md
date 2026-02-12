@@ -9,7 +9,7 @@ Run a short, strict facilitation flow that separates idea exploration from desig
 
 ## Preflight
 
-Run `use-memory` first, then carry only relevant constraints/preferences into this workflow.
+Start brainstorming directly, carrying only constraints/preferences relevant to the decision.
 
 ## Modes
 
@@ -20,11 +20,14 @@ Run `use-memory` first, then carry only relevant constraints/preferences into th
 
 1. Ask exactly one question per turn.
 2. Ask only questions that change a decision.
-3. Ground in current context first (files, docs, state) before deep ideation.
-4. Keep answers concrete, concise, and testable.
-5. Do divergence before convergence.
-6. Do not force design output unless requested.
-7. Keep outputs short and decision-focused.
+3. Ask questions as a short pickup list, not open-ended prose.
+4. Use 2-4 numbered options plus `Other`.
+5. Keep option labels short (2-6 words) with one-line impact.
+6. Ground in current context first (files, docs, state) before deep ideation.
+7. Keep answers concrete, concise, and testable.
+8. Do divergence before convergence.
+9. Do not force design output unless requested.
+10. Keep outputs short and decision-focused.
 
 ## Workflow
 
@@ -32,6 +35,12 @@ Run `use-memory` first, then carry only relevant constraints/preferences into th
 - Summarize relevant current state.
 - Confirm goal, constraints, and success criteria.
 - Include only the memory constraints/preferences that affect the current decision.
+- If a question is needed, use:
+  `Q1: <decision-shaping question>`
+  `Pick one:`
+  `1. <Option A> - <impact>`
+  `2. <Option B> - <impact>`
+  `3. Other - <one-line answer>`
 
 2. Diverge:
 - Propose 2-4 distinct approaches.

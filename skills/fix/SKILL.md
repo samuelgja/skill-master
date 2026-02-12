@@ -9,7 +9,7 @@ Ship a verified bug fix fast, with test evidence.
 
 ## Quick Path
 
-Run `use-memory` first to load constraints/preferences, then continue with bug fixing.
+Start bug fixing directly.
 
 ## Hard Rules
 
@@ -46,6 +46,12 @@ Write a 5-line brief before coding:
 - Unknowns and assumptions
 
 If expected behavior is unclear, inspect tests/docs/history first, then ask one precise question.
+If a question is needed, format it as a pickup list:
+- `Q1: <what decision is needed>`
+- `Pick one:`
+- `1. <Option A> - <impact>`
+- `2. <Option B> - <impact>`
+- `3. Other - <one-line answer>`
 
 ## Step 1: Hypotheses (60 seconds)
 
