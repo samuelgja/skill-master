@@ -28,14 +28,15 @@ Turn a plan into completed work with minimal mistakes, minimal repetition, and c
 
 1. Do not execute before preflight is complete.
 2. Do not run tasks outside the approved plan scope unless user approves.
-3. Confirm execution mode only if unclear:
-- If user/plan already specifies mode, use it.
-- If unclear, ask one question: `Single agent` or `Parallel workers`.
-4. If assumptions are needed, list them and ask for confirmation.
-5. Keep context lean: do not load entire docs when only one phase is needed.
-6. Complete one task at a time per worker, with explicit verification.
-7. Mark task status in output (`done`, `blocked`, `deferred`).
-8. When the full plan is complete, move the plan file from `docs/tasks/` to `docs/done-tasks/`.
+3. Default to autonomous execution with no routine user interaction.
+4. Default mode is `single` (single manager lane). Use `parallel` only for explicit non-blocking, low-overlap lanes.
+5. If assumptions are needed, list them, choose the safest actionable assumption, and continue.
+6. Do not stop between phases. Continue autonomously through all phases and return only once at the end.
+7. If a risk gate is hit, do not ask immediately; take the safest non-destructive fallback, mark affected items `deferred` or `blocked`, and continue remaining in-scope work.
+8. Keep context lean: do not load entire docs when only one phase is needed.
+9. Complete one task at a time per worker, with explicit verification.
+10. Mark task status in output (`done`, `blocked`, `deferred`).
+11. When the full plan is complete, move the plan file from `docs/tasks/` to `docs/done-tasks/`.
 
 ## Preflight (Required)
 
@@ -58,6 +59,29 @@ Turn a plan into completed work with minimal mistakes, minimal repetition, and c
 - mode (`single` or `parallel`)
 - constraints to respect
 - first task to execute
+5. Output an assumptions log if needed:
+- assumption
+- why it is safe enough to proceed
+- rollback trigger
+
+## Phase Start Checklist (Required Before Each Phase)
+
+Before executing tasks in a phase, record this checklist internally:
+
+- Phase:
+- Have:
+- Missing:
+- Todo this phase:
+- [ ] Task 1
+- [ ] Task 2
+- Can proceed: `yes | no` (one-line reason)
+
+At final response, include all phase checklists in order.
+
+Rules:
+- Keep checklist concrete and short.
+- If `Can proceed: no`, try one autonomous unblock action first.
+- If still blocked, mark only the impacted tasks `blocked` or `deferred`, then continue the rest of the plan.
 
 ## Execution Mode
 
@@ -90,7 +114,7 @@ Flow:
 
 ## Output Format
 
-Use this format each update:
+Use this format internally during execution, and publish one consolidated report at the end:
 
 - Phase:
 - Task:
@@ -98,6 +122,7 @@ Use this format each update:
 - Evidence:
 - Next:
 - Risks/Notes:
+- Assumptions used (if any):
 
 ## Guardrails
 
@@ -105,6 +130,7 @@ Use this format each update:
 - Do not provide long narrative where a short status is enough.
 - Do not repeat previous failed action without a changed hypothesis.
 - Do not hide uncertainty; surface it early with a concrete unblock request.
+- Do not ask the user between phases.
 
 ## Final Acceptance Gate
 

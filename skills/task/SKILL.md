@@ -22,9 +22,9 @@ Produce a short plan that tells:
 ## Hard Rules
 
 1. Keep tasks concise. No implementation-level code instructions.
-2. Ask clarification questions only when they change scope or sequencing.
-3. Ask at most 2 clarification questions before drafting v1.
-4. If assumptions are required, list them and ask for quick confirmation.
+2. Always ask clarification before drafting v1 unless the user explicitly says to skip questions.
+3. Ask exactly 1 high-impact clarification question first; ask a 2nd only if the first answer leaves a blocking ambiguity.
+4. If assumptions are required, list them and ask for quick confirmation before writing the final plan.
 5. Prefer phases that can be executed in parallel when safe.
 6. Mark dependencies explicitly as blocking or non-blocking.
 7. Every task must be testable and self-explanatory.
@@ -32,6 +32,8 @@ Produce a short plan that tells:
 9. Start every plan with a one-sentence brief: what this plan delivers.
 10. Add stack/process guidance in max 2 sentences (language/framework/tools and workflow rules from prompt or loaded skills).
 11. If prompt/skills define process constraints (example: not using git), mention and enforce them in the header.
+12. Do not start execution-oriented wording ("implement", "run now", "apply immediately") before clarification is complete.
+13. If user does not answer clarification, stop after posting the single question and wait.
 
 ## Planning Process
 
@@ -40,20 +42,29 @@ Produce a short plan that tells:
 - Note relevant project rules/skills to respect in one short header line.
 - Extract stack/process constraints from prompt and loaded skills before drafting phases.
 
-2. Minimal clarification:
-- Ask 0-2 high-impact questions only.
-- If no response yet, proceed with explicit assumptions.
+2. Clarification gate (mandatory):
+- Ask 1 question that changes scope, sequencing, or acceptance criteria.
+- Prefer missing info in this order: success criteria -> constraints -> non-goals -> deadline/priority.
+- Do not draft phases yet.
+- If user says "skip questions", proceed with explicit assumptions.
+- If user does not respond, wait instead of auto-planning.
 
-3. Draft phased plan:
+3. Optional second clarification:
+- Ask 1 additional question only if still blocked by a major ambiguity.
+- Otherwise proceed to draft.
+
+4. Draft phased plan:
 - Group work by outcome, not by files.
 - Use short task lines with checkboxes.
 - Add dependency tag per task: `[B]` blocking, `[NB]` non-blocking.
 - Add owner lane hint when parallelization is possible (Agent A/B/C).
 
-4. Quality pass:
+5. Quality pass:
 - Remove vague tasks.
 - Remove duplicate tasks.
 - Ensure each phase has a clear done condition.
+- Run a DoR-lite check on each blocking task: clear outcome, owner, dependency, measurable done condition.
+- Add one "Validation" task or section that verifies behavior with concrete checks.
 
 ## Output Format (Strict)
 
@@ -76,6 +87,11 @@ Use this exact structure:
 
 ## Assumptions
 - <assumption>
+
+## Clarifications
+- Q1:
+- A1:
+- Status: `answered | user_skipped_questions`
 
 ## Phases
 ### Phase 1 - <Outcome>
@@ -114,6 +130,13 @@ Use an INVEST-lite check before finalizing:
 - Small
 - Testable
 
+Also validate each task against 2026 agent-planning quality signals:
+- Specific: objective and boundaries are explicit.
+- Observable: acceptance can be verified without guessing intent.
+- Sequenced: dependency type is explicit.
+- Recoverable: high-risk work includes rollback/mitigation note.
+- Cost-aware: avoid over-decomposition for trivial scope.
+
 Reject tasks like:
 - "Refactor code"
 - "Fix stuff"
@@ -136,6 +159,7 @@ Prefer:
 - Do not ask many questions in one turn.
 - Do not proceed silently on major assumptions; ask for confirmation.
 - Do not omit stack/process context when it is known from prompt or loaded skills.
+- Do not output a full task plan in the same turn as the first clarification question.
 
 ## Handoff
 
