@@ -1,11 +1,11 @@
 ---
 name: task
-description: Use when creating or refining implementation plans/tasks for engineering work. Trigger for requests like "make a plan", "break this into tasks", "phase this work", or "prepare parallel agent execution". Produce brief, strict, self-explanatory plans with phases, checkboxes, blocking vs non-blocking dependencies, scope, and acceptance criteria. Do not provide step-by-step coding instructions.
+description: Use when creating or refining implementation tasks for engineering work. Trigger for requests like "make a plan", "break this into tasks", "phase this work", or "prepare parallel agent execution". Produce brief, strict, self-explanatory tasks with phases, checkboxes, blocking vs non-blocking dependencies, scope, and acceptance criteria. Do not provide step-by-step coding instructions.
 ---
 
 # Task
 
-Create PM-style execution plans that are brief, strict, and parallel-friendly.
+Create PM-style execution tasks that are brief, strict, and parallel-friendly.
 
 ## Goal
 
@@ -17,14 +17,14 @@ Produce a short plan that tells:
 
 ## Hard Rules
 
-1. Keep plans concise. No implementation-level code instructions.
+1. Keep tasks concise. No implementation-level code instructions.
 2. Ask clarification questions only when they change scope or sequencing.
 3. Ask at most 2 clarification questions before drafting v1.
 4. If assumptions are required, list them and ask for quick confirmation.
 5. Prefer phases that can be executed in parallel when safe.
 6. Mark dependencies explicitly as blocking or non-blocking.
 7. Every task must be testable and self-explanatory.
-8. Write plans to `docs/plans/YYYY-MM-DD-<topic>.md`.
+8. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
 9. Start every plan with a one-sentence brief: what this plan delivers.
 10. Add stack/process guidance in max 2 sentences (language/framework/tools and workflow rules from prompt or loaded skills).
 11. If prompt/skills define process constraints (example: not using git), mention and enforce them in the header.
@@ -135,4 +135,4 @@ Prefer:
 
 ## Handoff
 
-After the task plan is created and confirmed, execution can start immediately with the `execute-task` skill using the saved plan in `docs/plans/...`.
+After the task plan is created and confirmed, execution can start immediately with the `execute-task` skill using the saved plan in `docs/tasks/...`.

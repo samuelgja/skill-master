@@ -1,6 +1,8 @@
-# Install in OpenCode
+# OpenCode
 
-These steps install this repository's skills for OpenCode.
+These steps install and update this repository's skills for OpenCode.
+
+## Install
 
 Repository:
 

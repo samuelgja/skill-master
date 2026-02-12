@@ -1,6 +1,8 @@
-# Install in Codex
+# Codex
 
-These steps install this repository's skills for Codex.
+These steps install and update this repository's skills for Codex.
+
+## Install
 
 Repository:
 

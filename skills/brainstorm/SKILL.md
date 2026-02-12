@@ -57,7 +57,7 @@ Run a short, strict facilitation flow that separates idea exploration from desig
 
 Write only when requested:
 
-`docs/plans/YYYY-MM-DD-<topic>-design.md`
+`docs/tasks/YYYY-MM-DD-<topic>-design.md`
 
 Include:
 - Scope (in/out)

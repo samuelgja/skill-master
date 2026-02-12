@@ -1,6 +1,8 @@
-# Install in Claude Code
+# Claude Code
 
-These steps apply to Claude Code skills.
+These steps install and update this repository's skills for Claude Code.
+
+## Install
 
 Repository:
 
@@ -39,3 +41,13 @@ Start a new Claude Code session and ask for a skill-triggering task (example: "h
 
 - Claude discovers skills from `~/.claude/skills` (personal) and `.claude/skills` (project).
 - Each skill must be in `~/.claude/skills/<skill-name>/SKILL.md`.
+
+## Update
+
+```bash
+cd ~/skill-master && git pull
+for skill_dir in ~/skill-master/skills/*; do
+  [ -d "$skill_dir" ] || continue
+  ln -sfn "$skill_dir" ~/.claude/skills/"$(basename "$skill_dir")"
+done
+```

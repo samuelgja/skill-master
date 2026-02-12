@@ -1,11 +1,11 @@
 ---
 name: execute-task
-description: Use to execute an approved task plan from docs/plans. Trigger when user asks to implement a plan, run phases, or execute tasks with one agent or multiple agents. Start with a strict preflight (context, constraints, stack, required skills), then execute phase-by-phase with progress evidence and completion checks.
+description: Use to execute an approved task plan from docs/tasks. Trigger when user asks to implement a plan, run phases, or execute tasks with one agent or multiple agents. Start with a strict preflight (context, constraints, stack, required skills), then execute phase-by-phase with progress evidence and completion checks.
 ---
 
 # Execute Task
 
-Execute plans fast without drifting from scope.
+Execute tasks fast without drifting from scope.
 
 ## Goal
 
@@ -31,11 +31,11 @@ Turn a plan into completed work with minimal mistakes, minimal repetition, and c
 5. Keep context lean: do not load entire docs when only one phase is needed.
 6. Complete one task at a time per worker, with explicit verification.
 7. Mark task status in output (`done`, `blocked`, `deferred`).
-8. When the full plan is complete, move the plan file from `docs/plans/` to `docs/done-tasks/`.
+8. When the full plan is complete, move the plan file from `docs/tasks/` to `docs/done-tasks/`.
 
 ## Preflight (Required)
 
-1. Read target plan file in `docs/plans/...`.
+1. Read target plan file in `docs/tasks/...`.
 2. Extract only:
 - brief/objective
 - current phase

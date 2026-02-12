@@ -9,7 +9,7 @@ Practical, strict skills for coding agents.
 Use this repo when you want agents to:
 - think before coding
 - plan work clearly
-- execute plans without drifting
+- execute tasks without drifting
 - fix bugs with evidence, not guesses
 
 ## Why this repo
@@ -17,26 +17,48 @@ Use this repo when you want agents to:
 Most skill packs are too verbose or too generic.  
 `skill-master` focuses on short, executable workflows that work in real projects.
 
-## Quick Start
+## Install
 
 Pick your agent and paste one command:
 
 ### Claude Code
 
 ```text
-Fetch and follow instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/claude.md
+Fetch and follow installation instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/claude.md
 ```
 
 ### Codex
 
 ```text
-Fetch and follow instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/codex.md
+Fetch and follow installation instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/codex.md
 ```
 
 ### OpenCode
 
 ```text
-Fetch and follow instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/opencode.md
+Fetch and follow installation instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/opencode.md
+```
+
+## Update
+
+Pick your agent and paste one command:
+
+### Claude Code
+
+```text
+Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/claude.md
+```
+
+### Codex
+
+```text
+Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/codex.md
+```
+
+### OpenCode
+
+```text
+Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/opencode.md
 ```
 
 After install, start a new session and ask:
@@ -51,21 +73,21 @@ The matching skill should auto-trigger.
 | Skill | Purpose |
 |---|---|
 | `brainstorm` | Explore ideas, converge decisions, optional design handoff |
-| `task` | Create short PM-style phased plans with blocking/non-blocking tasks |
-| `execute-task` | Execute approved plans in single-agent or parallel mode |
+| `task` | Create short PM-style phased tasks with blocking/non-blocking tasks |
+| `execute-task` | Execute approved tasks in single-agent or parallel mode |
 | `fix` | Test-first bug fixing with clear evidence and strict stop rules |
 
 ## Recommended Workflow
 
 1. `brainstorm` -> shape direction
-2. `task` -> create execution plan in `docs/plans/`
+2. `task` -> create execution plan in `docs/tasks/`
 3. `execute-task` -> implement and verify
 4. `fix` -> handle regressions with test-first flow
-5. Completed plans move to `docs/done-tasks/`
+5. Completed tasks move to `docs/done-tasks/`
 
 ## Repository Structure
 
 - `skills/` - skill folders (`<name>/SKILL.md`)
 - `installation/` - install guides by platform
-- `docs/plans/` - active plans
-- `docs/done-tasks/` - completed plans
+- `docs/tasks/` - active tasks
+- `docs/done-tasks/` - completed tasks
