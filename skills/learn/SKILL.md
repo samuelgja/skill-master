@@ -53,6 +53,8 @@ Write flow:
 5. If the exact line already exists, do not duplicate.
 6. Otherwise append the new line at the end of `memory.md`.
 7. Return one-line confirmation with scope and saved sentence.
+8. If memory was added mid-workflow, continue the prior workflow immediately after added (created memory); do not stop.
+9. Never wait for a follow-up "continue" message; proceed in the same reply/turn.
 
 ## Retrieval Notes
 

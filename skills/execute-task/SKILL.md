@@ -7,15 +7,54 @@ description: Execute an approved plan from docs/tasks with an execution-first lo
 
 Run the plan to completion. Do not stop at analysis or status reporting.
 
-## Quick Path
+## Canonical Definition
 
-1. Read only the target plan file in `docs/tasks/...`.
-2. Execute tasks phase-by-phase until complete, blocked, or explicitly paused by user.
-3. Treat `execute-plan <path>` as an alias for this same workflow.
+Execute-task is a contract-driven delivery loop:
+- Read the approved plan contract.
+- Execute one smallest concrete step.
+- Verify with observable evidence.
+- Update status.
+- Continue until final acceptance is evaluated.
+
+## Evidence Base (Anti-Drift, as of 2026-02)
+
+- Long-context models can miss relevant details when information sits in the middle of context windows, so periodic re-anchoring is required (Liu et al., TACL 2023, "Lost in the Middle").
+- Long-horizon SWE agents degrade with context explosion and semantic drift without active context management; structured compression improves stability under bounded context budgets (Liu et al., arXiv 2025, "Context as a Tool").
+- Repository-scale coding requires cross-file context; benchmarks show large drops without retrieval of relevant repository context (RepoBench 2023; CrossCodeEval 2023; RepoCoder 2023).
+- Task switching/interruptions in software engineering increase cognitive load and disrupt performance; self-interruptions are often especially costly (Abad et al., EASE 2018; Parnin and Rugaber, ICPC 2009).
+
+## Best Default (Picked)
+
+Use Convention-Anchored Single-Track Execution by default.
+- Step A: Lock project conventions (`AGENTS.md`, nearby file patterns, plan contracts).
+- Step B: Execute one task slice at a time with evidence gates.
+- Step C: Re-anchor and compress context at phase boundaries, then continue.
+
+Why this default is best:
+- Minimizes drift toward generic LLM priors over long runs.
+- Preserves repository consistency and maintainability.
+- Reduces interruption overhead and avoids multitasking churn.
+- Keeps completion claims tied to verifiable artifacts.
+
+## Quick Path
+1. Follow project conventions from `AGENTS.md` and local file patterns first.
+2. Read only the target plan file in `docs/tasks/...`.
+3. Execute tasks phase-by-phase until complete, blocked, or explicitly paused by user.
+4. Treat `execute-plan <path>` as an alias for this same workflow.
 
 ## Goal
 
 Deliver observable outcomes from the plan with minimal drift, minimal user interrupts, and verifiable evidence.
+
+## Convention Lock (Required)
+
+Before edits, lock on project-specific conventions instead of generic defaults.
+
+- Read `AGENTS.md` plus plan-referenced docs before making changes.
+- Prefer existing repository patterns over generic "best practice" advice.
+- Reuse naming/style/test conventions from nearby files in the same module.
+- If a convention is unclear, inspect local examples before inventing a new pattern.
+- Record a short "convention checklist" in preflight and use it during execution.
 
 ## Hard Rules
 
@@ -30,6 +69,12 @@ Deliver observable outcomes from the plan with minimal drift, minimal user inter
 9. If the plan includes `Task Status`, treat it as status source of truth and update only its checkboxes.
 10. If a phase includes `Implementation Strategy`, follow its `Why/How/Check before/Be careful` constraints unless user-approved changes are required.
 11. Treat each phase `Inputs`, `Deliverable`, and `Verify with` lines as the execution contract.
+12. Project conventions from `AGENTS.md` and local code patterns override generic priors.
+13. At each phase boundary, re-anchor on the plan contract and convention checklist before continuing.
+14. If unsure between two approaches, pick the one that is most consistent with existing repository patterns.
+15. Never stop after intermediate reporting; continue execution unless blocked or explicitly paused.
+16. Keep WIP low: one active task by default unless explicit low-risk `[NB]` parallelization is requested by plan.
+17. If `learn` is invoked mid-execution, save memory then resume the prior task flow in the same turn; do not wait for "continue".
 
 ## Research-First Gate (Conditional)
 
@@ -50,6 +95,8 @@ Capture this brief before phase execution:
 - Model target: from plan header if specified.
 - Mode: `single | parallel`.
 - Constraints: stack/process/risk limits.
+- Convention sources: `AGENTS.md`, plan docs, closest analogous files.
+- Convention checklist: naming, structure, validation, commit/report expectations.
 - First task: first unblocked task to execute.
 - Assumptions (optional): safest assumption + rollback trigger.
 - Contract check: `Inputs`, `Deliverable`, `Verify with` are concrete.
@@ -58,13 +105,25 @@ Capture this brief before phase execution:
 
 For each unblocked task:
 
-1. Restate task done condition in one line plus the phase `Deliverable` and `Verify with` contract.
+1. Restate task done condition in one line plus the phase `Deliverable` and `Verify with` contract, aligned to the convention checklist.
 2. Perform one concrete action (edit, command, test, migration step, or research step).
 3. Verify with targeted evidence.
 4. Update status: toggle the matching `Task Status` checkbox for `done`; use report labels for `blocked | deferred | in_progress`.
 5. Continue to next unblocked task without waiting for user.
 
 If a task fails twice with different fixes, mark `blocked` with smallest decision needed and continue remaining tasks.
+
+## Drift Control (Required)
+
+Prevent quality drift during long execution:
+
+1. At each phase end, quickly re-read:
+- current phase tasks
+- `Task Status` checkboxes
+- convention checklist
+2. If recent changes drift from local conventions, correct drift before starting next task.
+3. After interruptions/context switches, re-run preflight contract check in short form.
+4. If unresolved convention ambiguity remains after local lookup, ask one precise question and continue on answer.
 
 ## Evidence Standard
 
@@ -107,6 +166,7 @@ If `no`, attempt one safe unblock action, then continue with remaining phases if
 - Do not rewrite phase task lines for status tracking; update `Task Status` checkboxes instead.
 - Do not report completion without execution artifacts.
 - Do not repeat the same failed action without a changed hypothesis.
+- Do not prefer abstract best practices over explicit repository conventions.
 - Keep output short and decision-focused.
 
 

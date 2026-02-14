@@ -5,7 +5,7 @@ description: Use when creating or refining implementation tasks for engineering 
 
 # Task
 
-Create brief, strict, parallel-ready execution tasks.
+Create strict, self-explanatory, parallel-ready execution tasks.
 
 ## Quick Path
 

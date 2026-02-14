@@ -9,12 +9,14 @@ Ship a verified bug fix fast, with test evidence.
 
 ## Quick Path
 
-Start bug fixing directly.
+1. Load relevant memory first (use-memory flow, local by default).
+2. Start with one failing test whenever tests are available.
+3. Apply one minimal root-cause fix and verify.
 
 ## Hard Rules
 
 1. Do not patch from a vague symptom.
-2. Default to test-first.
+2. Default to failing-test-first.
 3. One bug, one failing test, one minimal fix.
 4. No "fixed" claim without passing evidence.
 5. After two failed patch attempts, stop patching and switch to deep localization.
@@ -22,6 +24,19 @@ Start bug fixing directly.
 - Preferred: `I found the bug.` (when backed by a failing test or direct evidence)
 - If evidence is strong but not yet fully proven: `I likely found the bug in <area>; I will confirm with a failing test.`
 - Avoid absolute certainty language before evidence.
+7. If memory exists, apply relevant memory constraints before choosing tools, test scope, or patch strategy.
+8. Do not ask the user to say "continue" after intermediate outputs; continue the fix loop unless blocked.
+
+## Step -2: Memory Load (Required)
+
+Before Step -1, run the use-memory behavior:
+
+1. Read local memory from `docs/memory/memory.md` (and global only if explicitly requested).
+2. Select the most relevant 3-7 lines for this bug.
+3. Convert to short action rules for this fix.
+4. Continue immediately into bug-fix flow.
+
+If memory file is missing, continue without blocking.
 
 ## Step -1: Task Context Check (Fast)
 
@@ -92,6 +107,18 @@ Choose one:
 If attempt 1 fails, run one more informed patch.
 If attempt 2 fails, switch to DEEP route.
 
+## Failing Test Approach (Required Default)
+
+Write somehow tests and use this exact order:
+
+1. Name test by observable behavior, not implementation detail.
+2. Encode one bug expectation in one assertion group.
+3. Verify test fails for the target reason.
+4. Patch only the root-cause area proven by the failing test.
+5. Re-run same test to green, then broaden test scope.
+
+A fix is not complete if the test never failed first.
+
 ## DEEP Route (Localize Then Test)
 
 1. Reproduce with the smallest reliable trigger.
@@ -119,6 +146,7 @@ Use temporary non-test evidence only when tests are blocked by infrastructure li
 4. Add backlog note for missing automated test.
 
 Do not close the bug as fully resolved without a test plan.
+Return to failing-test approach as soon as infrastructure allows.
 
 ## Output Format
 
