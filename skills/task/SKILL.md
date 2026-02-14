@@ -1,6 +1,6 @@
 ---
 name: task
-description: Use when creating or refining implementation tasks for engineering work. Trigger for requests like "make a plan", "break this into tasks", "phase this work", or "prepare parallel agent execution". Produce brief, strict, self-explanatory tasks with phases, checkboxes, blocking vs non-blocking dependencies, scope, and acceptance criteria. Do not provide step-by-step coding instructions.
+description: Use when creating or refining implementation tasks for engineering work. Trigger for requests like "make a plan", "break this into tasks", "phase this work", or "prepare parallel agent execution". Produce brief, strict, self-explanatory tasks with phases, a per-task status checklist, blocking vs non-blocking dependencies, scope, and acceptance criteria. Do not provide step-by-step coding instructions.
 ---
 
 # Task
@@ -30,12 +30,14 @@ Produce a plan that states:
 7. Prefer phases that can be executed in parallel when safe.
 8. Mark dependencies explicitly as blocking or non-blocking.
 9. Every task must be testable and self-explanatory.
-10. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
-11. Start with a one-sentence brief of plan outcome.
-12. Add stack/process guidance in max 2 sentences.
-13. If process constraints are known from prompt/skills, state them in the header and enforce them.
-14. If user does not answer clarification, stop after the question and wait.
-15. If the user asks for "best" definitions or interaction patterns, run focused online research first and cite 3-6 authoritative sources.
+10. Add a `Task Status` section where each line is only `- [ ] <Task name>` (or `- [x] <Task name>` when done).
+11. Track progress by toggling checkbox state in `Task Status`; do not rewrite task description lines.
+12. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
+13. Start with a one-sentence brief of plan outcome.
+14. Add stack/process guidance in max 2 sentences.
+15. If process constraints are known from prompt/skills, state them in the header and enforce them.
+16. If user does not answer clarification, stop after the question and wait.
+17. If the user asks for "best" definitions or interaction patterns, run focused online research first and cite 3-6 authoritative sources.
 
 ## Workflow
 
@@ -56,12 +58,14 @@ Produce a plan that states:
 
 4. Draft phased plan:
 - Group by outcomes, not files.
-- Use checkboxes and tags: `[B]` blocking, `[NB]` non-blocking.
+- Write task description lines without checkboxes; keep tags: `[B]` blocking, `[NB]` non-blocking.
 - Add owner hint where parallel work is possible (`Agent A/B/C`).
+- Mirror each task once in `Task Status` using checkbox lines with task name only.
 
 5. Quality pass:
 - Remove vague/duplicate tasks.
 - Ensure each phase has a measurable done condition.
+- Ensure task names match exactly between `Phases` and `Task Status`.
 - Add a validation section with concrete checks.
 
 ## Output Format (Strict)
@@ -96,12 +100,16 @@ Use this exact structure:
 
 ## Phases
 ### Phase 1 - <Outcome>
-- [ ] [B|NB] <Task> (Owner: Agent A) - Why: <reason> - Benefit: <benefit>
+- <Task> [B|NB] (Owner: Agent A) - Why: <reason> - Benefit: <benefit>
 - Done when:
 
 ### Phase 2 - <Outcome>
-- [ ] [B|NB] <Task> (Owner: Agent B) - Why: <reason> - Benefit: <benefit>
+- <Task> [B|NB] (Owner: Agent B) - Why: <reason> - Benefit: <benefit>
 - Done when:
+
+## Task Status
+- [ ] <Task name from Phase 1>
+- [ ] <Task name from Phase 2>
 
 ## Dependency Map
 - <Task/Phase> -> <Task/Phase> [B]
@@ -118,12 +126,17 @@ Use this exact structure:
 
 ## Task Quality Standard
 
-A good task line must:
+A good task description line must:
 - Start with a verb.
 - Name the outcome, not the implementation.
 - Be independently completable by one agent.
 - Include a reason and expected benefit in simple language.
 - Include a checkable completion condition.
+
+A good task status line must:
+- Use only checkbox state plus task name.
+- Match exactly one task description line.
+- Avoid owner/why/benefit metadata.
 
 Use an INVEST-lite check before finalizing:
 - Independent
@@ -152,6 +165,7 @@ Also validate with SCORE-lite:
 - Do not ask many questions in one turn.
 - Do not proceed silently on major assumptions; ask for confirmation.
 - Do not omit stack/process context when it is known from prompt or loaded skills.
+- Do not edit phase task text to show progress; toggle only `Task Status` checkboxes.
 - Do not output a full task plan in the same turn as the first clarification question.
 
 ## Handoff
