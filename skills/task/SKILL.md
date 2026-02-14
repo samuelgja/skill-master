@@ -218,4 +218,4 @@ Also validate with SCORE-lite:
 
 ## Handoff
 
-After the task plan is created and confirmed, execution can start with `execute-task` (or `execute-plan` if your environment uses that alias) using the saved plan in `docs/tasks/...`.
+After the task plan is created and confirmed, execution can start with `execute-task` using the saved plan in `docs/tasks/...`.

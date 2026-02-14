@@ -108,3 +108,6 @@ If `no`, attempt one safe unblock action, then continue with remaining phases if
 - Do not report completion without execution artifacts.
 - Do not repeat the same failed action without a changed hypothesis.
 - Keep output short and decision-focused.
+
+
+Do not stop or interrupt the execution loop for routine status updates; only ask the user when a high-risk decision is needed or a task is blocked with no clear unblock action otherwise process from start to finish with almost no user interaction.
