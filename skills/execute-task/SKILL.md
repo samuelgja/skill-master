@@ -28,6 +28,7 @@ Deliver observable outcomes from the plan with minimal drift, minimal user inter
 7. Do not end after a checklist/report; continue until plan acceptance is evaluated.
 8. If all acceptance criteria pass, move file `docs/tasks/...` -> `docs/done-tasks/...`.
 9. If the plan includes `Task Status`, treat it as status source of truth and update only its checkboxes.
+10. If a phase includes `Implementation Strategy (no code steps)`, follow its `Do`/`Avoid` decisions unless user-approved changes are required.
 
 ## Research-First Gate (Conditional)
 
@@ -54,7 +55,7 @@ Capture this brief before phase execution:
 
 For each unblocked task:
 
-1. Restate task done condition in one line.
+1. Restate task done condition in one line and note any matching `Do`/`Avoid` strategy constraint.
 2. Perform one concrete action (edit, command, test, migration step, or research step).
 3. Verify with targeted evidence.
 4. Update status: toggle the matching `Task Status` checkbox for `done`; use report labels for `blocked | deferred | in_progress`.

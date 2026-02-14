@@ -1,6 +1,6 @@
 ---
 name: task
-description: Use when creating or refining implementation tasks for engineering work. Trigger for requests like "make a plan", "break this into tasks", "phase this work", or "prepare parallel agent execution". Produce brief, strict, self-explanatory tasks with phases, a per-task status checklist, blocking vs non-blocking dependencies, scope, and acceptance criteria. Do not provide step-by-step coding instructions.
+description: Use when creating or refining implementation tasks for engineering work. Trigger for requests like "make a plan", "break this into tasks", "phase this work", or "prepare parallel agent execution". Produce brief, strict, self-explanatory tasks with phases, architecture-level implementation strategy notes, a per-task status checklist, blocking vs non-blocking dependencies, scope, and acceptance criteria. Do not provide step-by-step coding instructions.
 ---
 
 # Task
@@ -15,6 +15,8 @@ Run `use-memory`, then create tasks.
 
 Produce a plan that states:
 - What will be done
+- How each task will be executed (approach-level)
+- Which architecture constraints/choices guide execution
 - Why it matters
 - Scope boundaries
 - How success is verified
@@ -30,14 +32,28 @@ Produce a plan that states:
 7. Prefer phases that can be executed in parallel when safe.
 8. Mark dependencies explicitly as blocking or non-blocking.
 9. Every task must be testable and self-explanatory.
-10. Add a `Task Status` section where each line is only `- [ ] <Task name>` (or `- [x] <Task name>` when done).
-11. Track progress by toggling checkbox state in `Task Status`; do not rewrite task description lines.
-12. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
-13. Start with a one-sentence brief of plan outcome.
-14. Add stack/process guidance in max 2 sentences.
-15. If process constraints are known from prompt/skills, state them in the header and enforce them.
-16. If user does not answer clarification, stop after the question and wait.
-17. If the user asks for "best" definitions or interaction patterns, run focused online research first and cite 3-6 authoritative sources.
+10. Every phase task line must include `Approach: <how>` in one short phrase (strategy-level, no code steps).
+11. Every phase must include `Implementation Strategy (no code steps)` with 2-5 architecture-level bullets.
+12. Strategy bullets must be decision-oriented and include rationale using `Do: <choice> - Because: <reason>` and, when relevant, `Avoid: <choice> - Because: <risk>`.
+13. Strategy bullets may name libraries, patterns, data-shape constraints, and integration boundaries; never provide line-by-line coding instructions.
+14. Add a `Task Status` section where each line is only `- [ ] <Task name>` (or `- [x] <Task name>` when done).
+15. Track progress by toggling checkbox state in `Task Status`; do not rewrite task description lines.
+16. Write tasks to `docs/tasks/YYYY-MM-DD-<topic>.md`.
+17. Start with a one-sentence brief of plan outcome.
+18. Add stack/process guidance in max 2 sentences.
+19. If process constraints are known from prompt/skills, state them in the header and enforce them.
+20. If user does not answer clarification, stop after the question and wait.
+21. If the user asks for "best" definitions or interaction patterns, run focused online research first and cite 3-6 authoritative sources.
+
+## LLM Clarity Rules
+
+1. Use exact field labels from the template; do not rename sections.
+2. Keep one idea per line; avoid multi-clause sentences.
+3. Use concrete nouns (`API contract`, `cache layer`, `event schema`) instead of pronouns (`it`, `this`).
+4. Keep each `Approach` phrase short (about 4-10 words).
+5. Keep each strategy bullet to one decision plus one reason.
+6. Prefer deterministic wording: `Do:` and `Avoid:` only (no synonyms).
+7. If a key detail is unknown, add it under `Assumptions` instead of guessing.
 
 ## Workflow
 
@@ -59,6 +75,8 @@ Produce a plan that states:
 4. Draft phased plan:
 - Group by outcomes, not files.
 - Write task description lines without checkboxes; keep tags: `[B]` blocking, `[NB]` non-blocking.
+- Require this order in each task line: task name -> owner -> `Approach` -> `Why` -> `Benefit`.
+- Add `Implementation Strategy (no code steps)` under each phase with 2-5 `Do`/`Avoid` bullets and explicit rationale.
 - Add owner hint where parallel work is possible (`Agent A/B/C`).
 - Mirror each task once in `Task Status` using checkbox lines with task name only.
 
@@ -66,6 +84,7 @@ Produce a plan that states:
 - Remove vague/duplicate tasks.
 - Ensure each phase has a measurable done condition.
 - Ensure task names match exactly between `Phases` and `Task Status`.
+- Ensure `Approach` and strategy bullets remain concise and unambiguous for parsing.
 - Add a validation section with concrete checks.
 
 ## Output Format (Strict)
@@ -100,11 +119,17 @@ Use this exact structure:
 
 ## Phases
 ### Phase 1 - <Outcome>
-- <Task> [B|NB] (Owner: Agent A) - Why: <reason> - Benefit: <benefit>
+- <Task> [B|NB] (Owner: Agent A) - Approach: <how> - Why: <reason> - Benefit: <benefit>
+- Implementation Strategy (no code steps):
+- Do: <architectural step/choice> - Because: <reason>
+- Avoid: <pattern/constraint> - Because: <risk>
 - Done when:
 
 ### Phase 2 - <Outcome>
-- <Task> [B|NB] (Owner: Agent B) - Why: <reason> - Benefit: <benefit>
+- <Task> [B|NB] (Owner: Agent B) - Approach: <how> - Why: <reason> - Benefit: <benefit>
+- Implementation Strategy (no code steps):
+- Do: <architectural step/choice> - Because: <reason>
+- Avoid: <pattern/constraint> - Because: <risk>
 - Done when:
 
 ## Task Status
@@ -130,8 +155,19 @@ A good task description line must:
 - Start with a verb.
 - Name the outcome, not the implementation.
 - Be independently completable by one agent.
+- Include a short `Approach` phrase that explains how the outcome will be delivered.
 - Include a reason and expected benefit in simple language.
 - Include a checkable completion condition.
+
+A good implementation strategy entry must:
+- Describe architecture-level execution choices, not code-level actions.
+- Name at least one explicit design decision and why it is preferred.
+- Include an `Avoid` entry when a known anti-pattern or risk should be prevented.
+- Stay concise (one line per decision with reason).
+
+Use this strategy mini-template when possible:
+- `Do: Use <library/pattern> for <boundary> - Because: <constraint or benefit>`
+- `Avoid: <pattern/structure> in <boundary> - Because: <risk>`
 
 A good task status line must:
 - Use only checkbox state plus task name.
@@ -165,6 +201,9 @@ Also validate with SCORE-lite:
 - Do not ask many questions in one turn.
 - Do not proceed silently on major assumptions; ask for confirmation.
 - Do not omit stack/process context when it is known from prompt or loaded skills.
+- Do not omit `Approach` in phase task lines.
+- Do not omit `Implementation Strategy (no code steps)` in phases.
+- Do not provide code-level recipes disguised as architecture strategy.
 - Do not edit phase task text to show progress; toggle only `Task Status` checkboxes.
 - Do not output a full task plan in the same turn as the first clarification question.
 
