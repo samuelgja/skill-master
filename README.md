@@ -4,22 +4,22 @@
 
 # skill-master
 
-Practical, strict skills for coding agents.
+Two skills. Both for autonomous research. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch), but language-agnostic and monorepo-friendly.
 
-Use this repo when you want agents to:
-- think before coding
-- plan work clearly
-- execute tasks without drifting
-- fix bugs with evidence, not guesses
+## Idea
 
-## Why this repo
+Hand the agent a problem. Let it experiment forever. Wake up to a leaderboard.
 
-Most skill packs are too verbose or too generic.  
-`skill-master` focuses on short, executable workflows that work in real projects.
+- **`create-research`** — scaffolds a strict spec (`research-rules.md`) + runnable validator (`research-validation.<ext>`).
+- **`research`** — executes the loop. Mutates target file, commits, runs, validates, keeps or reverts. Never asks. Never stops until budget hit or you say so.
+
+Two modes:
+1. **Sequential** — single branch, one experiment at a time, `git reset` on regress (karpathy-style).
+2. **Parallel** — N git worktrees per round, evolutionary survivor selection across rounds.
+
+Mutation: LLM free-form by default. Optional named knobs in rules.md.
 
 ## Install
-
-Pick your agent and paste one command:
 
 ### Claude Code
 
@@ -41,53 +41,52 @@ Fetch and follow installation instructions from https://raw.githubusercontent.co
 
 ## Update
 
-Pick your agent and paste one command:
+Same URL as install. Each guide includes update steps.
 
-### Claude Code
+After install or update, restart your session.
 
-```text
-Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/claude.md
-```
-
-### Codex
-
-```text
-Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/codex.md
-```
-
-### OpenCode
-
-```text
-Fetch and follow update instructions from https://raw.githubusercontent.com/samuelgja/skill-master/main/installation/opencode.md
-```
-
-After install or update, start a new session and begin your task.
-
-## Included Skills
+## Skills
 
 | Skill | Purpose |
 |---|---|
-| `use-memory` | Quickly load relevant memory constraints/preferences before other workflows |
-| `brainstorm` | Explore ideas, converge decisions, optional design handoff |
-| `learn` | Capture and reuse user decisions/preferences as one-line memory rules |
-| `task` | Create short PM-style phased tasks with blocking/non-blocking tasks |
-| `execute-task` | Execute approved tasks in single-agent or parallel mode |
-| `fix` | Test-first bug fixing with clear evidence and strict stop rules |
+| `create-research` | Scaffold `research-rules.md` + `research-validation.<ext>` for a new experiment loop |
+| `research` | Execute the loop autonomously. Sequential or parallel. Forever until stop. |
 
-## Recommended Workflow
+## Workflow
 
-1. `use-memory` -> quickly load relevant memory before other workflows
-2. `brainstorm` -> shape direction
-3. `learn` -> store durable preferences/constraints
-4. `task` -> create execution plan in `docs/tasks/`
-5. `execute-task` -> implement and verify
-6. `fix` -> handle regressions with test-first flow
-7. Completed tasks move to `docs/done-tasks/`
+1. Run `create-research`. Answer the pick-list questions (goal, target file, run cmd, validator, mode, budget, forbidden paths, invariants).
+2. Skill writes `research/<topic>/research-rules.md` and `research-validation.<ext>`.
+3. Run `research <topic>`. Confirm setup once. Loop starts.
+4. Walk away. Loop runs forever or until a stop condition fires.
+5. Wake up. Read `research/<topic>/results.tsv` leaderboard. Check the winning branch. Merge or discard.
 
-## Repository Structure
+## Repository layout
 
-- `skills/` - skill folders (`<name>/SKILL.md`)
-- `installation/` - install guides by platform
-- `docs/memory/` - local project memory log (`memory.md`)
-- `docs/tasks/` - active tasks
-- `docs/done-tasks/` - completed tasks
+- `skills/create-research/SKILL.md`
+- `skills/research/SKILL.md`
+- `installation/{claude,codex,opencode}.md`
+- `assets/logo.svg`
+
+User repos using these skills get:
+
+- `research/<topic>/research-rules.md` — strict spec
+- `research/<topic>/research-validation.<ext>` — runnable validator
+- `research/<topic>/results.tsv` — append-only leaderboard (gitignored)
+- `research/<topic>/run.log` — last run output (gitignored)
+- `research/<topic>/notes.md` — side-channel context dropped by the user during loop
+- `research/<topic>/worktrees/` — parallel mode worktrees (gitignored)
+
+## Contract for `research-validation.<ext>`
+
+- Exits 0 on completion (success OR controlled failure).
+- Final stdout line, verbatim:
+  ```
+  RESULT_JSON: {"score": <number>, "valid": <bool>, "notes": "<string>"}
+  ```
+- Score direction (`minimize` / `maximize`) lives in `research-rules.md`.
+
+Templates included in `create-research` for `.py`, `.ts`, `.sh`. Other languages: same contract, your skeleton.
+
+## Never-stop clause
+
+`research-rules.md` carries a "Never-stop" section. The executor never asks the user mid-loop. Side messages get logged to `notes.md`. Loop halts only on stop conditions or explicit `stop`/`halt`/`abort`.
